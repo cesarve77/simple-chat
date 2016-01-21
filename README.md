@@ -58,6 +58,12 @@ Example:
 this options will be overwrite individually on {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> title=\<title> limit=\<limit> minimize=\<minimize>}}  
 as you saw below
 
+#Road Map
+- Publish user in a room
+- detect one to one room chat or multiple user chat and show username in message box
+- detect send, arrived and read message (like whatapp)
+- Need a Feature open a issue
+
 # Contributing 
 
 1) Please help me with my english
