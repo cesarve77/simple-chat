@@ -24,6 +24,7 @@
 ## Usage
 
 just paste the template 
+
     {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> title=\<title> limit=\<limit> minimize=\<minimize>}}  
       
 Where
