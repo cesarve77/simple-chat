@@ -1,6 +1,6 @@
-#Simple Chat window: is the start point for make your own chat
+# Simple Chat window: is the start point for make your own chat
 
-##Features
+## Features
 
 - Very simple api chat window
 - Multiple chat in the same view
@@ -10,11 +10,11 @@
 
 Demo [http://simplechat.meteor.com](http://simplechat.meteor.com  target="_blank")
 
-##Installing
+## Installing
 
     $ meteor add cesarve:simple-chat 
 
-##Usage
+## Usage
 
 just paste the template 
     {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> title=\<title> limit=\<limit> minimize=\<minimize>}}  
@@ -38,7 +38,7 @@ Example:
     //limit is a helper
 
 
-##Configure Globally
+## Configure Globally
 
     SimpleChat.configure({
         title: "Chat", //"Chat" as default
