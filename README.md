@@ -1,5 +1,7 @@
 #Simple Chat window: is the start point for make your own chat
 
+##Features
+
 - Very simple api chat window
 - Multiple chat in the same view
 - auto scroll on new message

@@ -1,5 +1,5 @@
 Package.describe({
-    summary: "A basic chat package, for integrate with your app",
+    summary: "Simple chat windows. The star point to make your own chat",
     version: "0.1.0",
     name: "cesarve:simple-chat",
     git: "https://github.com/cesarve77/simple-chat"
