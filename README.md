@@ -11,7 +11,7 @@
 ## Demo 
 
 ### Working demo
-[http://simplechat.meteor.com]
+[http://simpleschat.meteor.com]
 
 ### Demo source
 
@@ -60,11 +60,15 @@ as you saw below
 # Contributing 
 
 1) Please help me with my english
+
 2) Pull request are very welcome
+
 3) fork the repo
-4) clone your fork
+
 5) make changes
+
 6) commit
+
 7) make a pull request
 
 
