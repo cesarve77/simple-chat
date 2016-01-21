@@ -8,13 +8,20 @@
 - load more button
 - optional beep on new message
 
-Demo [http://simplechat.meteor.com](http://simplechat.meteor.com  target="_blank")
+## Demo 
+
+### Working demo
+[http://simplechat.meteor.com]
+
+### Demo source
+
+[https://github.com/cesarve77/demo-simple-chat]
 
 ## Installing
 
     $ meteor add cesarve:simple-chat 
 
-## Usage
+## Usagenit
 
 just paste the template 
     {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> title=\<title> limit=\<limit> minimize=\<minimize>}}  

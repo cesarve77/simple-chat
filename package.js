@@ -1,6 +1,6 @@
 Package.describe({
     summary: "Simple chat windows. The star point to make your own chat",
-    version: "0.1.1_1",
+    version: "0.1.0",
     name: "cesarve:simple-chat",
     git: "https://github.com/cesarve77/simple-chat"
 });
@@ -8,9 +8,8 @@ Package.describe({
 Package.onUse(function (api) {
     api.use([
         'templating',
-        'momentjs:moment',
-        'check',
-        'jquery',
+        'momentjs:moment@2.11.1',
+        'check'
     ]),
     api.versionsFrom('1.2.1');
     api.addFiles(['publications.js'], ['server']);
