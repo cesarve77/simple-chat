@@ -1,0 +1,77 @@
+<!--template name="Register">
+    <form>
+    <input type="text" name="name">
+    <input type="email" name="email">
+        <button type="submit">Submit</button>
+    </form>
+</template-->
+
+<template name="SimpleChatWindow">
+    <section class="simple-chat-window">
+        <header>
+            <div class="simple-chat-window-left">
+                <span class="simple-chat-window-icon-message"></span>
+
+                <h1>{{{title}}}</h1>
+            </div>
+
+            <div class="simple-chat-window-right">
+                {{#if minimize}}
+                    <span class="simple-chat-window-min"><img
+                            src="/packages/cesarve_live-person/assets/minimize-window-xxl.png"></span>
+                    <!--span class="chat-window-close"><img src="/packages/cesarve_live-person/chat/close-window-xxl.png"></span-->
+                {{/if}}
+            </div>
+        </header>
+        <div class="simple-chat-window-discussion">
+
+            <div class="simple-chat-window-scroll">
+                {{#unless Template.subscriptionsReady}}
+
+                    <div class="spinner">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                {{else}}
+                    {{#if hasMore }}
+                        <button class="btn btn-block btn-default" id="simple-chat-load-more">Load More</button>
+                    {{/if}}
+                {{/unless}}
+
+                <ol>
+
+
+                    {{#each simpleChats}}
+                        <li class="simple-chat-window-{{from username}}">
+
+                            <div class="simple-chat-window-avatar">
+                                {{#if other username}}
+                                    <img src="{{avatar}}" class="avatar">
+                                {{/if}}
+                            </div>
+
+                            <div class="simple-chat-window-messages">
+                                <p style="padding: 4px">{{message}}</p>
+                                <time>{{formatDate date}}</time>
+                            </div>
+                        </li>
+                    {{/each}}
+
+
+                </ol>
+            </div>
+        </div>
+        <footer>
+
+            <textarea rows="2" class="simple-chat-window-input-message" placeholder="Message"
+                      id="simple-chat-message"></textarea>
+
+
+        </footer>
+
+    </section>
+
+
+</template>
+
