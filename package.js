@@ -10,7 +10,9 @@ Package.onUse(function (api) {
         'templating',
         'momentjs:moment@2.11.1',
         'check'
-    ]),
+    ])
+    api.use('matb33:collection-hooks', ['server', 'client'], {weak: true})
+
     api.versionsFrom('1.2.1');
     api.addFiles(['publications.js'], ['server']);
     api.addFiles(['collections.js','methods.js'], ['client','server']);
