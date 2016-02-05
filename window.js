@@ -20,6 +20,7 @@ SimpleChat.scrollToEnd = function (template) {
 Template.SimpleChatWindow.onCreated(function () {
     console.log('created')
     this.data.initializing = true;
+    this.data.subscribing = true;
     this.data.title = this.data.title || SimpleChat.options.title
     this.data.minimize = this.data.minimize || SimpleChat.options.minimize
     this.data.limit = new ReactiveVar(this.data.limit || SimpleChat.options.limit)
@@ -66,18 +67,24 @@ Template.SimpleChatWindow.onRendered(function () {
     this.autorun(() => {
         if (this.subscriptionsReady()) {
 
-            this.data.initializing = false;
+            this.data.subscribing = false;
             /**
              * the setTimeOut is to be sure that dom already update, and make the real calc of scroñ
              */
-                console.log('SCROLLLLLL', this.data.scroll, this.$('.direct-chat-messages')[0].scrollHeight)
-                this.$('.direct-chat-messages').scrollTop(this.$('.scroll-height')[0].scrollHeight - this.data.scroll )
-
+            console.log('SCROLLLLLL', this.data.scroll, this.$('.direct-chat-messages')[0].scrollHeight)
+            this.$('.direct-chat-messages').scrollTop(this.$('.scroll-height')[0].scrollHeight - this.data.scroll)
 
 
         } else {
-            this.data.initializing = true;
+            this.data.subscribing = true;
+            if (this.data.initializing)
+                Meteor.setTimeout(()=>{
+                    this.data.initializing=false
+                    SimpleChat.scrollToEnd(this)
+                })
+
         }
+
 
     })
 
@@ -111,8 +118,8 @@ Template.SimpleChatWindow.helpers({
 
         let handleChanges = chats.observeChanges({
             added: (id, doc) => {
-                if (!this.initializing) {
-                    console.log('this.initializing', this.initializing)
+                if (!this.subscribing) {
+                    console.log('this.subscribing', this.subscribing)
                     $(window).trigger('SimpleChat.newMessage', [doc])
                 }
             }
@@ -121,8 +128,7 @@ Template.SimpleChatWindow.helpers({
         return chats;
     },
     hasMore: function () {
-        console.log('this.limit.get()', ' get ', this.limit.get(), ' typeof  ', typeof this.limit.get())
-        console.log('this.roomId2', Template.instance().getRoomId())
+        console.log('this.limit.get()',  this.limit)
         return SimpleChat.Chats.find({roomId: Template.instance().getRoomId()}, {
                 sort: {date: 1},
                 limit: this.limit.get()
@@ -154,22 +160,30 @@ Template.SimpleChatWindow.events({
 
 
     },
-    'keydown #simple-chat-message, click button': function (event) {
-        if (event.which == 13) { // 13 is the enter key event
-            var $message = $(event.currentTarget)
+    'keydown #simple-chat-message': function (event) {
+        var $message = $(event.currentTarget)
+        if (event.which == 13 && $message.val() != '') { // 13 is the enter key event
             event.preventDefault()
-            if ($message.val() != '') {
-                var text = $message.val()
-                $message.val('');
-                SimpleChat.scrollToEnd(Template.instance())
-                Meteor.call('SimpleChat.newMessage', text, Template.instance().getRoomId(), Template.instance().getUsername(), Template.instance().data.avatar, function (err) {
-                    if (err) {
-                        console.error(err)
-                        $message.val(text);
-                    }
-                })
-            }
+            console.log('Template.instance().$(button)', Template.instance().$('button'))
+            Template.instance().$('button').click()
         }
+    },
+    'click button': function () {
+        var $message = Template.instance().$('#simple-chat-message')
+
+        if ($message.val() != '') {
+            var text = $message.val()
+            $message.val('');
+            SimpleChat.scrollToEnd(Template.instance())
+
+            Meteor.call('SimpleChat.newMessage', text, Template.instance().getRoomId(), Template.instance().getUsername(), Template.instance().data.avatar, function (err) {
+                if (err) {
+                    console.error(err)
+                    $message.val(text);
+                }
+            })
+        }
+
     }
 });
 
