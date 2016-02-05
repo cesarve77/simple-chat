@@ -25,14 +25,12 @@
 
 just paste the template 
 
-    {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> title=\<title> limit=\<limit> minimize=\<minimize>}}  
+    {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> limit=\<limit> }}  
       
 Where
-- \<roomId>: required, unique id for each room, 
-- \<username>: required string with username, unique referred 
-- \<avatar>: optional string with image url
-- \<title>: optional string with window title
-- \<minimize>: optional boolean to show or not a minimize button on window
+- \<roomId>: required, a function to return a unique id for each room, 
+- \<username>: required a function to return a string with username, unique referred 
+- \<avatar>: optional string with image src
 - \<limit>: optional number fot limit the last "n" messages
 - \<beep>: optional boolean emit sound on new message
 
@@ -49,26 +47,18 @@ Example:
 ## Configure Globally
 
     SimpleChat.configure({
-        title: "Chat", //"Chat" as default
-        minimize: false, //false as default
         limit:  100, // 100 as default
         beep: false, //false as default
     })
 
-this options will be overwrite individually on {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> title=\<title> limit=\<limit> minimize=\<minimize>}}  
+this options can be overwrite individually on {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> limit=\<limit> }}  
 as you saw below
 
+# Styling
 
-## Hooks
-```
-//install matb33:collection-hooks
-$ meteor add matb33:collection-hooks
-```
-```
- SimpleChat.Chats.before.insert(function (userId, doc) {
-    //you logic here
- })
-```
+Chat html was taken from https://almsaeedstudio.com/themes/AdminLTE/documentation/index.html
+with direct chat widget
+
 
 # Road Map
 - Publish user in a room
@@ -90,4 +80,4 @@ $ meteor add matb33:collection-hooks
 
 7) make a pull request
 
-
+#

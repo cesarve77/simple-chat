@@ -7,70 +7,71 @@
 </template-->
 
 <template name="SimpleChatWindow">
-    <section class="simple-chat-window">
-        <header>
-            <div class="simple-chat-window-left">
-                <span class="simple-chat-window-icon-message"></span>
 
-                <h1>{{{title}}}</h1>
-            </div>
 
-            <div class="simple-chat-window-right">
-                {{#if minimize}}
-                    <span class="simple-chat-window-min"><img
-                            src="/packages/cesarve_live-person/assets/minimize-window-xxl.png"></span>
-                    <!--span class="chat-window-close"><img src="/packages/cesarve_live-person/chat/close-window-xxl.png"></span-->
-                {{/if}}
-            </div>
-        </header>
-        <div class="simple-chat-window-discussion">
+    <!--
+    class
+    direct-chat-primary
+    box-primary
+    btn-primary
+     -->
 
-            <div class="simple-chat-window-scroll">
+
+    <div class="box-body chat-scroll">
+
+        <!-- Conversations are loaded here -->
+        <div class="direct-chat-messages">
+            <div class="scroll-height">
                 {{#unless Template.subscriptionsReady}}
 
-                    <div class="spinner">
-                        <div class="bounce1"></div>
-                        <div class="bounce2"></div>
-                        <div class="bounce3"></div>
+                    <div class="" style="height: 34px; width: 64px; margin: auto">
+                      {{>spinner}}
                     </div>
                 {{else}}
                     {{#if hasMore }}
                         <button class="btn btn-block btn-default" id="simple-chat-load-more">Load More</button>
                     {{/if}}
                 {{/unless}}
-
-                <ol>
-
-
-                    {{#each simpleChats}}
-                        <li class="simple-chat-window-{{from username}}">
-
-                            <div class="simple-chat-window-avatar">
-                                {{#if other username}}
-                                    <img src="{{avatar}}" class="avatar">
-                                {{/if}}
-                            </div>
-
-                            <div class="simple-chat-window-messages">
-                                <p style="padding: 4px">{{message}}</p>
-                                <time>{{formatDate date}}</time>
-                            </div>
-                        </li>
-                    {{/each}}
+                <!-- Message. Default to the left -->
+                {{#each simpleChats}}
+                    <div class="direct-chat-msg {{#if me}}right{{/if}}">
+                        <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-left">{{username}}</span>
+                            <span class="direct-chat-timestamp pull-right">{{formatDate date}}</span>
+                        </div>
+                        <!-- /.direct-chat-info -->
+                        {{#if avatar}}
+                            <img class="direct-chat-img" src="{{avatar}}" alt="message user image"><!-- /.direct-chat-img -->
+                        {{/if}}
+                        <div class="direct-chat-text" style="{{#unless avatar}}margin: 5px 0 0 0px{{/unless}}">
+                            {{message}}
+                        </div>
+                        <!-- /.direct-chat-text -->
+                    </div>
+                    <!-- /.dir-->
 
 
-                </ol>
+
+
+                {{/each}}
+
             </div>
         </div>
-        <footer>
-
-            <textarea rows="2" class="simple-chat-window-input-message" placeholder="Message"
-                      id="simple-chat-message"></textarea>
+        <!--/.direct-chat-messages-->
 
 
-        </footer>
-
-    </section>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <div class="input-group">
+            <input type="text" name="message" placeholder="Type Message ..." class="form-control"
+                   id="simple-chat-message">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-primary btn-flat">Send</button>
+              </span>
+        </div>
+    </div>
+    <!-- /.box-footer-->
 
 
 </template>
