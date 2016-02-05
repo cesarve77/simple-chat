@@ -1,4 +1,4 @@
-# Simple Chat window: is the start point for make your own chat
+# Simple Chat window: the starter point to build your own chat, in seconds
 
 ## Features
 
