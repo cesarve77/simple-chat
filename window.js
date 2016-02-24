@@ -1,6 +1,4 @@
 SimpleChat.options = {
-    title: "Chat",
-    minimize: false,
     limit: 5,
     beep: true
 }
@@ -18,13 +16,10 @@ SimpleChat.scrollToEnd = function (template) {
 }
 
 Template.SimpleChatWindow.onCreated(function () {
-    this.data.initializing = true;
-    this.data.subscribing = true;
-    this.data.title = this.data.title || SimpleChat.options.title
-    this.data.minimize = this.data.minimize || SimpleChat.options.minimize
-    this.data.limit = new ReactiveVar(this.data.limit || SimpleChat.options.limit)
-    this.data.beep = this.data.beep || SimpleChat.options.beep
-    this.data.increment = this.data.limit.get()
+    this.initializing = true;
+    this.limit = new ReactiveVar(this.limit || SimpleChat.options.limit)
+    this.beep = this.beep || SimpleChat.options.beep
+    this.increment = this.limit.get()
     if (typeof this.data.roomId != "function")
         this.getRoomId = ()=> {
             return this.data.roomId + ""
@@ -41,7 +36,8 @@ Template.SimpleChatWindow.onCreated(function () {
 
 
     this.autorun(() => {
-        this.subscribe("simpleChats", this.getRoomId(), this.data.limit.get());
+        this.subscribe("simpleChats", this.getRoomId(), this.limit.get());
+        this.subscribing = true;
     })
 
 
@@ -59,20 +55,21 @@ Template.SimpleChatWindow.onRendered(function () {
         }
     })
     this.autorun(() => {
+
         if (this.subscriptionsReady()) {
 
-            this.data.subscribing = false;
+            this.subscribing = false;
             /**
              * the setTimeOut is to be sure that dom already update, and make the real calc of scroñ
              */
-            this.$('.direct-chat-messages').scrollTop(this.$('.scroll-height')[0].scrollHeight - this.data.scroll)
+            this.$('.direct-chat-messages').scrollTop(this.$('.scroll-height')[0].scrollHeight - this.scroll)
 
 
         } else {
-            this.data.subscribing = true;
-            if (this.data.initializing)
+            this.subscribing = true;
+            if (this.initializing)
                 Meteor.setTimeout(()=>{
-                    this.data.initializing=false
+                    this.initializing=false
                     SimpleChat.scrollToEnd(this)
                 })
 
@@ -85,11 +82,11 @@ Template.SimpleChatWindow.onRendered(function () {
         if (this.endScroll) {
 
             SimpleChat.scrollToEnd(this)
-            if (this.data.beep && window.visivility == 'hidden' ) {
+            if (this.beep && window.visivility == 'hidden' ) {
                 new Audio('/packages/cesarve_simple-chat/assets/bell.mp3').play()
             }
         } else {
-            if (this.data.beep  && this.getUsername() != doc.username) {
+            if (this.beep  && this.getUsername() != doc.username) {
                 new Audio('/packages/cesarve_simple-chat/assets/bell.mp3').play()
             }
         }
@@ -100,12 +97,13 @@ Template.SimpleChatWindow.onRendered(function () {
 Template.SimpleChatWindow.helpers({
 
     simpleChats: function () {
+        var template=Template.instance()
+        var chats = SimpleChat.Chats.find({roomId: template.getRoomId()}, {sort: {date: 1}})
 
-        var chats = SimpleChat.Chats.find({roomId: Template.instance().getRoomId()}, {sort: {date: 1}})
 
         let handleChanges = chats.observeChanges({
             added: (id, doc) => {
-                if (!this.subscribing) {
+                if (!template.subscribing) {
                     $(window).trigger('SimpleChat.newMessage', [doc])
                 }
             }
@@ -116,8 +114,8 @@ Template.SimpleChatWindow.helpers({
     hasMore: function () {
         return SimpleChat.Chats.find({roomId: Template.instance().getRoomId()}, {
                 sort: {date: 1},
-                limit: this.limit.get()
-            }).count() === this.limit.get()
+                limit: Template.instance().limit.get()
+            }).count() === Template.instance().limit.get()
     },
 
     me: function () {
@@ -138,28 +136,31 @@ Template.SimpleChatWindow.helpers({
 
 Template.SimpleChatWindow.events({
     'click #simple-chat-load-more': function () {
-        this.limit.set(this.limit.get() + this.increment)
-        this.scroll = Template.instance().$('.scroll-height')[0].scrollHeight
-        Template.instance().$(".direct-chat-messages").animate({scrollTop: 0}, 0);
-        Template.instance().$('.direct-chat-messages').trigger('scroll')
+        let template=Template.instance()
+        template.subscribing=true;
+        template.limit.set(template.limit.get() + template.increment)
+        template.scroll = template.$('.scroll-height')[0].scrollHeight
+        template.$(".direct-chat-messages").animate({scrollTop: 0}, 0);
+        template.$('.direct-chat-messages').trigger('scroll')
 
     },
     'keydown #simple-chat-message': function (event) {
         var $message = $(event.currentTarget)
         if (event.which == 13 && $message.val() != '') { // 13 is the enter key event
             event.preventDefault()
-            Template.instance().$('button').click()
+            Template.instance().$('button#message-send').click()
         }
     },
-    'click button': function () {
-        var $message = Template.instance().$('#simple-chat-message')
+    'click button#message-send': function () {
+        let template=Template.instance()
+        var $message = template.$('#simple-chat-message')
 
         if ($message.val() != '') {
             var text = $message.val()
             $message.val('');
-            SimpleChat.scrollToEnd(Template.instance())
+            SimpleChat.scrollToEnd(template)
 
-            Meteor.call('SimpleChat.newMessage', text, Template.instance().getRoomId(), Template.instance().getUsername(), Template.instance().data.avatar, function (err) {
+            Meteor.call('SimpleChat.newMessage', text, template.getRoomId(), template.getUsername(), template.data.avatar, function (err) {
                 if (err) {
                     console.error(err)
                     $message.val(text);
