@@ -25,7 +25,7 @@
 
 just paste the template 
 
-    {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> limit=\<limit> showViewed=<showViewed>  showJoined=<showJoined> publishChats=<publishChats> allow=<allow>}}  
+    {{>SimpleChatWindow roomId=<roomId> username=<username> avatar=<avatar> limit=<limit> showViewed=<showViewed>  showJoined=<showJoined> publishChats=<publishChats> allow=<allow>}}  
    
       
 Where
