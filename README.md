@@ -28,16 +28,6 @@ just paste the template
     {{>SimpleChatWindow roomId=\<roomId> username=\<username> avatar=\<avatar> limit=\<limit> showViewed=true  showJoined= true publishChats=publishChats allow=allow}}  
    
       
-      showViewed: true,
-          showReceived: true,
-          showJoined: true,
-          publishChats: function(roomId, limi){
-              return true
-          },
-          allow: function(message, roomId, username, avatar, name){
-              return true
-          }
-      
 Where
 - \<roomId>: required, plain string or function return a unique id for each room , 
 - \<username>: required, plain string or function  return a string with unique user id or user name or any unique identifier  ,
@@ -91,7 +81,9 @@ as you saw below
 Chat html was taken from https://almsaeedstudio.com/themes/AdminLTE/documentation/index.html
 with direct chat widget
 
+Icons :
 
+(http://simpleschat.meteor.com/icons.html)[http://simpleschat.meteor.com/icons.html]
 
 # Contributing 
 

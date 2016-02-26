@@ -1,6 +1,6 @@
 Package.describe({
     summary: "Simple chat windows. The star point to make your own chat",
-    version: "0.2.0",
+    version: "0.2.1",
     name: "cesarve:simple-chat",
     git: "https://github.com/cesarve77/simple-chat"
 });
