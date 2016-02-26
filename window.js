@@ -1,12 +1,5 @@
-SimpleChat.options = {
-    limit: 5,
-    beep: true
-}
-SimpleChat.configure = function (options) {
-    this.options = this.options || {};
-    _.extend(this.options, options);
-    return this;
-}
+
+
 
 SimpleChat.scrollToEnd = function (template) {
     Template.SimpleChatWindow.endScroll = true;
@@ -18,8 +11,13 @@ SimpleChat.scrollToEnd = function (template) {
 Template.SimpleChatWindow.onCreated(function () {
     this.initializing = true;
     this.limit = new ReactiveVar(this.limit || SimpleChat.options.limit)
-    this.beep = this.beep || SimpleChat.options.beep
+    this.beep = this.data.beep!=undefined ? this.data.beep : SimpleChat.options.beep
+    this.showViewed = this.data.showViewed!=undefined ? this.data.showViewed : SimpleChat.options.showViewed
+    this.showJoined = this.data.showJoined!=undefined ? this.data.showJoined : SimpleChat.options.showJoined
+    this.showReceived = this.data.showReceived!=undefined ? this.data.showReceived : SimpleChat.options.showReceived
     this.increment = this.limit.get()
+
+    //accept function (for reactive data) or plain data
     if (typeof this.data.roomId != "function")
         this.getRoomId = ()=> {
             return this.data.roomId + ""
@@ -34,13 +32,25 @@ Template.SimpleChatWindow.onCreated(function () {
     else
         this.getUsername = this.data.username
 
+    if (typeof this.data.name != "function")
+        this.getName = ()=> {
+            return this.data.name || this.getUsername()
+        }
+    else
+        this.getName = this.data.name
+    if (typeof this.data.avatar != "function")
+        this.getAvatar = ()=> {
+            return this.data.avatar + ""
+        }
+    else
+        this.getAvatar = this.data.avatar
+
 
     this.autorun(() => {
         this.subscribe("simpleChats", this.getRoomId(), this.limit.get());
         this.subscribing = true;
     })
-
-
+    Meteor.call("SimpleChat.join", this.getRoomId(), this.getUsername(), this.getAvatar(), this.getName())
 });
 
 Template.SimpleChatWindow.onRendered(function () {
@@ -68,8 +78,8 @@ Template.SimpleChatWindow.onRendered(function () {
         } else {
             this.subscribing = true;
             if (this.initializing)
-                Meteor.setTimeout(()=>{
-                    this.initializing=false
+                Meteor.setTimeout(()=> {
+                    this.initializing = false
                     SimpleChat.scrollToEnd(this)
                 })
 
@@ -77,16 +87,31 @@ Template.SimpleChatWindow.onRendered(function () {
 
 
     })
-
-    $(window).on('SimpleChat.newMessage', (e, doc)=> {
-        if (this.endScroll) {
+    const username = this.getUsername()
+    if (this.showViewed) {
+        const checkViewed = ()=> {
+            if (window.visivility == "visible") {
+                $('.notViewed').filter(':onscreen').each(function (i, o) {
+                    $(o).removeClass('notViewed')
+                    Meteor.call("SimpleChat.messageViewed", $(o).attr('id'), username, function (err) {
+                        if (err)
+                            $(o).addClass('notViewed')
+                    })
+                })
+            }
+        }
+        $(window).on('resize scroll focus', checkViewed)
+        $('.direct-chat-messages').on('scroll', checkViewed)
+    }
+    $(window).on('SimpleChat.newMessage', (e, id, doc)=> {
+         if (this.endScroll) {
 
             SimpleChat.scrollToEnd(this)
-            if (this.beep && window.visivility == 'hidden' ) {
+            if (this.beep && window.visivility == 'hidden') {
                 new Audio('/packages/cesarve_simple-chat/assets/bell.mp3').play()
             }
         } else {
-            if (this.beep  && this.getUsername() != doc.username) {
+            if (this.beep && username != doc.username) {
                 new Audio('/packages/cesarve_simple-chat/assets/bell.mp3').play()
             }
         }
@@ -95,21 +120,38 @@ Template.SimpleChatWindow.onRendered(function () {
 
 
 Template.SimpleChatWindow.helpers({
-
+    showJoined: function(){
+        return Template.instance().showJoined
+    },
+    showViewed: function(){
+        return Template.instance().showViewed
+    },
+    showReceived: function(){
+        return Template.instance().showReceived
+    },
     simpleChats: function () {
-        var template=Template.instance()
+        var template = Template.instance()
         var chats = SimpleChat.Chats.find({roomId: template.getRoomId()}, {sort: {date: 1}})
 
 
         let handleChanges = chats.observeChanges({
             added: (id, doc) => {
+                const username = template.getUsername()
+                if (template.showReceived) {
+                    if (!_.contains(doc.receivedBy, username) && doc.message) {
+                        Meteor.call('SimpleChat.messageReceived', id, username)
+                    }
+                }
                 if (!template.subscribing) {
-                    $(window).trigger('SimpleChat.newMessage', [doc])
+                    $(window).trigger('SimpleChat.newMessage', [id, doc])
                 }
             }
         });
 
         return chats;
+    },
+    viewedMe: function () {
+        return Template.instance().getUsername() == this.username || _.contains(this.viewedBy, Template.instance().getUsername())
     },
     hasMore: function () {
         return SimpleChat.Chats.find({roomId: Template.instance().getRoomId()}, {
@@ -136,8 +178,8 @@ Template.SimpleChatWindow.helpers({
 
 Template.SimpleChatWindow.events({
     'click #simple-chat-load-more': function () {
-        let template=Template.instance()
-        template.subscribing=true;
+        let template = Template.instance()
+        template.subscribing = true;
         template.limit.set(template.limit.get() + template.increment)
         template.scroll = template.$('.scroll-height')[0].scrollHeight
         template.$(".direct-chat-messages").animate({scrollTop: 0}, 0);
@@ -152,7 +194,7 @@ Template.SimpleChatWindow.events({
         }
     },
     'click button#message-send': function () {
-        let template=Template.instance()
+        let template = Template.instance()
         var $message = template.$('#simple-chat-message')
 
         if ($message.val() != '') {
@@ -160,7 +202,7 @@ Template.SimpleChatWindow.events({
             $message.val('');
             SimpleChat.scrollToEnd(template)
 
-            Meteor.call('SimpleChat.newMessage', text, template.getRoomId(), template.getUsername(), template.data.avatar, function (err) {
+            Meteor.call('SimpleChat.newMessage', text, template.getRoomId(), template.getUsername(), template.getAvatar(), template.getName(), function (err) {
                 if (err) {
                     console.error(err)
                     $message.val(text);
