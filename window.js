@@ -40,7 +40,7 @@ Template.SimpleChatWindow.onCreated(function () {
         this.getName = this.data.name
     if (typeof this.data.avatar != "function")
         this.getAvatar = ()=> {
-            return this.data.avatar + ""
+            return this.data.avatar
         }
     else
         this.getAvatar = this.data.avatar
