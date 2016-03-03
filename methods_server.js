@@ -6,7 +6,7 @@
 
 Meteor.methods({
     "SimpleChat.messageReceived": function (id, username) {
-
+        this.unblock()
         if (!SimpleChat.options.showReceived) return false
         console.log('received')
         //todo remove
@@ -28,7 +28,7 @@ Meteor.methods({
         return false
     },
     "SimpleChat.join": function (roomId, username, avatar, name) {
-
+        this.unblock()
         if (!SimpleChat.options.showViewed) return false
         //todo remove
         if (process.env.ROOT_URL == "http://localhost:3000/") {
@@ -60,6 +60,7 @@ Meteor.methods({
         })
     },
     "SimpleChat.messageViewed": function (id, username) {
+        this.unblock()
         if (!SimpleChat.options.showViewed) return false
         //todo remove
         if (process.env.ROOT_URL == "http://localhost:3000/") {

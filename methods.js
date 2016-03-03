@@ -1,6 +1,7 @@
 
 Meteor.methods({
     "SimpleChat.newMessage": function (message, roomId, username, avatar, name) {
+        this.unblock()
         if (!SimpleChat.options.allow.call(this,message, roomId, username, avatar, name))
             throw new Meteor.Error(403, "Access deny")
         check(message, String);

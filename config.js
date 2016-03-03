@@ -4,10 +4,10 @@
 SimpleChat={}
 SimpleChat.options = {
     limit: 50,
-    beep: true,
-    showViewed: true,
-    showReceived: true,
-    showJoined: true,
+    beep: false,
+    showViewed: false,
+    showReceived: false,
+    showJoined: false,
     publishChats: function(roomId, limi){
         return true
     },
