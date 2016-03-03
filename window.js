@@ -201,7 +201,6 @@ Template.SimpleChatWindow.events({
             var text = $message.val()
             $message.val('');
             SimpleChat.scrollToEnd(template)
-
             Meteor.call('SimpleChat.newMessage', text, template.getRoomId(), template.getUsername(), template.getAvatar(), template.getName(), function (err) {
                 if (err) {
                     console.error(err)
