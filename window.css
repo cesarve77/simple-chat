@@ -428,6 +428,7 @@
   padding: 10px;
   height: 250px;
   overflow-y: auto;
+    overflow-x: hidden;
 }
 .direct-chat-msg,
 .direct-chat-text {

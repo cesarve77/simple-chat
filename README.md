@@ -11,7 +11,7 @@
 ## Demo 
 
 ### Working demo
-[http://simpleschat.meteor.com]
+[http://simpleschat.herokuapp.com/]
 
 ### Demo source
 
@@ -83,7 +83,7 @@ with direct chat widget
 
 Icons :
 
-(http://simpleschat.meteor.com/icons.html)[http://simpleschat.meteor.com/icons.html]
+(http://simpleschat.meteor.com/icons.html)[http://simpleschat.herokuapp.com/icons.html]
 
 # Contributing 
 
