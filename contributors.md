@@ -1,3 +1,3 @@
 ###Contributors
 
-* Cesar Ramos
+* Cesar Ramos c@imagenproactiva.com http://cesarramos.me
