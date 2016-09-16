@@ -1,20 +1,4 @@
-<!--template name="Register">
-    <form>
-    <input type="text" name="name">
-    <input type="email" name="email">
-        <button type="submit">Submit</button>
-    </form>
-</template-->
-
 <template name="SimpleChatWindow">
-
-
-    <!--
-    class
-    direct-chat-primary
-    box-primary
-    btn-primary
-     -->
 
 
     <div class="box-body chat-scroll">
@@ -29,7 +13,7 @@
                     </div>
                 {{else}}
                     {{#if hasMore }}
-                        <button class="btn btn-block btn-default" id="simple-chat-load-more">Load More</button>
+                        <button class="btn btn-block btn-default" id="simple-chat-load-more">{{loadMore}}</button>
                     {{/if}}
                 {{/unless}}
                 <!-- Message. Default to the left -->
@@ -73,30 +57,24 @@
                                 <img class="direct-chat-img" src="{{avatar}}" alt="message user image"  ><!-- /.direct-chat-img -->
                             {{/if}}
                             <div class="direct-chat-info clearfix" >
-                                <span class="direct-chat-name pull-left"> {{name}} {{#if join}}join{{else}}left{{/if}} to room at   {{formatDate date}}</span>
+                                <span class="direct-chat-name pull-left"> {{name}} {{#if join}}{{join}}{{else}}{{left}}{{/if}} {{room}} {{formatDate date}}</span>
 
                             </div>
                         </div>
                     {{/if}}
                     <!-- /.dir-->
-
-
-
                 {{/each}}
-
             </div>
         </div>
         <!--/.direct-chat-messages-->
-
-
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
         <div class="input-group">
-            <input type="text" name="message" placeholder="Type Message ..." class="form-control"
+            <input type="text" name="message" placeholder="{{placeholder}}" class="form-control"
                    id="simple-chat-message">
               <span class="input-group-btn">
-                <button type="button" class="btn btn-primary btn-flat" id="message-send">Send</button>
+                <button type="button" class="btn btn-primary btn-flat" id="message-send">{{button}}</button>
               </span>
         </div>
     </div>

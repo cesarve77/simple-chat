@@ -1,5 +1,6 @@
 Meteor.methods({
-    "SimpleChat.newMessage": function (message, roomId, username, avatar, name) {
+    "SimpleChat.newMessage": function (message, roomId, username, avatar, name,custom) {
+
         this.unblock()
         if (!SimpleChat.options.allow.call(this, message, roomId, username, avatar, name))
             throw new Meteor.Error(403, "Access deny")
@@ -9,10 +10,10 @@ Meteor.methods({
         if (avatar) check(avatar, Match.Optional(String));
         check(name, Match.Optional(String));
         //todo borrar
-        if (!this.isSimulation && process.env.ROOT_URL == "http://localhost:3000/") {
+        if (!this.isSimulation && Meteor.isDevelopment) {
             Meteor._sleepForMs(800)
         }
-        SimpleChat.Chats.insert({
+        const msg={
             message,
             roomId,
             username,
@@ -24,7 +25,11 @@ Meteor.methods({
             viewedAll: false,
             userId: this.userId,
             avatar,
+            custom,
             date: new Date()
-        })
+        }
+        msg._id=SimpleChat.Chats.insert(msg)
+        SimpleChat.options.onNewMessage(msg)
+        return msg
     }
 });

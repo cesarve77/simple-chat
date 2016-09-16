@@ -3,6 +3,15 @@
  */
 SimpleChat={}
 SimpleChat.options = {
+    texts:{
+        loadMore: 'Load More',
+        placeholder: 'Type message ...',
+        button: 'send',
+        join: 'Join to',
+        left: 'Left the',
+        room: 'room at'
+
+    },
     limit: 50,
     beep: false,
     showViewed: false,
@@ -13,6 +22,12 @@ SimpleChat.options = {
     },
     allow: function(message, roomId, username, avatar, name){
         return true
+    },
+    onNewMessage: function (msg) {
+        console.log(msg)
+    },
+    onReceiveMessage: function () {
+
     }
 }
 SimpleChat.configure = function (options) {

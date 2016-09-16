@@ -12,9 +12,7 @@ Meteor.methods({
         //todo remove
         check(id, String);
         check(username, String);
-        if (process.env.ROOT_URL == "http://localhost:3000/") {
-            Meteor._sleepForMs(800)
-        }
+        Meteor._sleepForMs(800 * Meteor.isDevelopment)
         const message = SimpleChat.Chats.findOne(id, {fields: {roomId: 1, receivedBy: 1}})
         if (!message)
             throw Meteor.Error(403, "Message do not exist")
@@ -25,24 +23,24 @@ Meteor.methods({
                 $set: {receivedAll: room.usernames.length - 2 <= message.receivedBy.length}
             })
         }
+        SimpleChat.options.onReceiveMessage(id, message, room)
         return false
     },
     "SimpleChat.join": function (roomId, username, avatar, name) {
         this.unblock()
         if (!SimpleChat.options.showViewed) return false
         //todo remove
-        if (process.env.ROOT_URL == "http://localhost:3000/") {
-            Meteor._sleepForMs(800)
-        }
+        Meteor._sleepForMs(800 * Meteor.isDevelopment)
         check(roomId, String);
         check(username, String);
+        const date=new Date()
         if (SimpleChat.options.showJoined) {
             SimpleChat.Chats.insert({
                 roomId,
                 username,
                 name,
                 avatar,
-                date: new Date(),
+                date,
                 join: true
             })
         }
@@ -57,15 +55,15 @@ Meteor.methods({
                 join: false
             })
             SimpleChat.Rooms.update(roomId, {$pull: {usernames: username}})
+            SimpleChat.options.onLeft(roomId, username, name,date)
         })
+        SimpleChat.options.onJoin(roomId, username, name,date)
     },
     "SimpleChat.messageViewed": function (id, username) {
         this.unblock()
         if (!SimpleChat.options.showViewed) return false
         //todo remove
-        if (process.env.ROOT_URL == "http://localhost:3000/") {
-            Meteor._sleepForMs(800)
-        }
+        Meteor._sleepForMs(800 * Meteor.isDevelopment)
         check(id, String);
         check(username, String);
         const message = SimpleChat.Chats.findOne(id, {fields: {roomId: 1, viewedBy: 1}})

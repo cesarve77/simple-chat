@@ -1,6 +1,3 @@
-
-
-
 SimpleChat.scrollToEnd = function (template) {
     Template.SimpleChatWindow.endScroll = true;
     template.$(".direct-chat-messages").animate({scrollTop: template.$('.scroll-height').height()}, 300);
@@ -9,14 +6,15 @@ SimpleChat.scrollToEnd = function (template) {
 }
 
 Template.SimpleChatWindow.onCreated(function () {
+
     this.initializing = true;
     this.limit = new ReactiveVar(this.limit || SimpleChat.options.limit)
-    this.beep = this.data.beep!=undefined ? this.data.beep : SimpleChat.options.beep
-    this.showViewed = this.data.showViewed!=undefined ? this.data.showViewed : SimpleChat.options.showViewed
-    this.showJoined = this.data.showJoined!=undefined ? this.data.showJoined : SimpleChat.options.showJoined
-    this.showReceived = this.data.showReceived!=undefined ? this.data.showReceived : SimpleChat.options.showReceived
+    this.beep = this.data.beep != undefined ? this.data.beep : SimpleChat.options.beep
+    this.showViewed = this.data.showViewed != undefined ? this.data.showViewed : SimpleChat.options.showViewed
+    this.showJoined = this.data.showJoined != undefined ? this.data.showJoined : SimpleChat.options.showJoined
+    this.showReceived = this.data.showReceived != undefined ? this.data.showReceived : SimpleChat.options.showReceived
     this.increment = this.limit.get()
-
+    console.log('Template.SimpleChatWindow.onCreated', this)
     //accept function (for reactive data) or plain data
     if (typeof this.data.roomId != "function")
         this.getRoomId = ()=> {
@@ -54,6 +52,8 @@ Template.SimpleChatWindow.onCreated(function () {
 });
 
 Template.SimpleChatWindow.onRendered(function () {
+
+    console.log('SimpleChatWindow.onRendered', this)
 
     var self = this
     self.endScroll = true;
@@ -104,7 +104,7 @@ Template.SimpleChatWindow.onRendered(function () {
         $('.direct-chat-messages').on('scroll', checkViewed)
     }
     $(window).on('SimpleChat.newMessage', (e, id, doc)=> {
-         if (this.endScroll) {
+        if (this.endScroll) {
 
             SimpleChat.scrollToEnd(this)
             if (this.beep && window.visivility == 'hidden') {
@@ -120,13 +120,28 @@ Template.SimpleChatWindow.onRendered(function () {
 
 
 Template.SimpleChatWindow.helpers({
-    showJoined: function(){
+    placeholder: function () {
+        return Template.instance().data.placeholder || SimpleChat.options.texts.placeholder
+    },
+    button: function () {
+        return Template.instance().data.button || SimpleChat.options.texts.button
+    },
+    join: function () {
+        return Template.instance().data.join || SimpleChat.options.texts.join
+    },
+    left: function () {
+        return Template.instance().data.left || SimpleChat.options.texts.left
+    },
+    room: function () {
+        return Template.instance().data.room || SimpleChat.options.texts.room
+    },
+    showJoined: function () {
         return Template.instance().showJoined
     },
-    showViewed: function(){
+    showViewed: function () {
         return Template.instance().showViewed
     },
-    showReceived: function(){
+    showReceived: function () {
         return Template.instance().showReceived
     },
     simpleChats: function () {
@@ -201,7 +216,7 @@ Template.SimpleChatWindow.events({
             var text = $message.val()
             $message.val('');
             SimpleChat.scrollToEnd(template)
-            Meteor.call('SimpleChat.newMessage', text, template.getRoomId(), template.getUsername(), template.getAvatar(), template.getName(), function (err) {
+            Meteor.call('SimpleChat.newMessage', text, template.getRoomId(), template.getUsername(), template.getAvatar(), template.getName(), this.custom, function (err) {
                 if (err) {
                     console.error(err)
                     $message.val(text);

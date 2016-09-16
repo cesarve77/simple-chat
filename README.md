@@ -25,7 +25,7 @@
 
 just paste the template 
 
-    {{>SimpleChatWindow roomId=<roomId> username=<username> avatar=<avatar> limit=<limit> showViewed=<showViewed>  showJoined=<showJoined> publishChats=<publishChats> allow=<allow>}}  
+    {{>SimpleChatWindow roomId=<roomId> username=<username> name=<name> avatar=<avatar> limit=<limit> showViewed=<showViewed>  showJoined=<showJoined> publishChats=<publishChats> allow=<allow> custom=<custom>}}  
    
       
 Where
@@ -40,6 +40,14 @@ Where
 - \<showJoined>: optional boolean for showing message when some user join to a room, default false
 - \<publishChats>: optional function return true for allow publish message, or false to deny this function receive as arguments (roomId, limit) and context is publish context, default return true
 - \<allow>: optional function return true for allow insert new message or false to deny, this function receive as argumetns (message, roomId, username, avatar, name) and context is methods context, default return true
+- \<custom>: optional any custom value
+- \<loadMore>: text for load more button default 'Load More'
+- \<placeholder>: text for input placeholder default 'Type message...'
+- \<button>: text for button submit default 'Send'
+- \<join>:  text for  message Join default  'Join to'
+- \<left>:  text for  message left default  'Left the'
+- \<room>:  text for  message Room defaut 'room'
+
 
 Note: this values can be a literal a helper or template data
 
@@ -58,16 +66,34 @@ Example:
 //somewhere in both (client and  server) 
 
 SimpleChat.configure ({
+    texts:{
+        loadMore: 'Load More',
+        placeholder: 'Type message ...',
+        button: 'send',
+        join: 'Join to',
+        left: 'Left the',
+        room: 'room at'
+
+    },
     limit: 5,
     beep: true, 
     showViewed: true,
     showReceived: true,
     showJoined: true,
-    publishChats: function(roomId, limi){
+    publishChats: function(roomId, limi){ //server
         return true
     },
     allow: function(message, roomId, username, avatar, name){
         return true
+    },
+    onNewMessage:function(msg){  //both
+    },
+    onReceiveMessage:function(id, message, room){ //server
+        
+    },
+    onJoin:function(roomId, username, name,date){  //server
+    },
+    onLeft:function(roomId, username, name,date) { //server
     }
 })
 
