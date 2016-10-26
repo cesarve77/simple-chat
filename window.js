@@ -52,9 +52,6 @@ Template.SimpleChatWindow.onCreated(function () {
 });
 
 Template.SimpleChatWindow.onRendered(function () {
-
-    console.log('SimpleChatWindow.onRendered', this)
-
     var self = this
     self.endScroll = true;
     this.$('.direct-chat-messages').scroll(function (event) {
@@ -65,9 +62,7 @@ Template.SimpleChatWindow.onRendered(function () {
         }
     })
     this.autorun(() => {
-
         if (this.subscriptionsReady()) {
-
             this.subscribing = false;
             /**
              * the setTimeOut is to be sure that dom already update, and make the real calc of scroñ
@@ -81,7 +76,7 @@ Template.SimpleChatWindow.onRendered(function () {
                 Meteor.setTimeout(()=> {
                     this.initializing = false
                     SimpleChat.scrollToEnd(this)
-                })
+                },50)
 
         }
 

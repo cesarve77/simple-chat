@@ -81,9 +81,14 @@ SimpleChat.configure ({
     showReceived: true,
     showJoined: true,
     publishChats: function(roomId, limi){ //server
-        return true
+       //here the context is the same for a Publications, that mean you have access to this.userId who are asking for subscribe.
+       // for example
+       return isLoggedAndHasAccessToSeeMessage(this.userId)
     },
     allow: function(message, roomId, username, avatar, name){
+       //here the context is the same for a Methods, thats mean you hace access to this.userId also
+       // for example
+       return isLoggedAndHasAccessSendMessages(this.userId)
         return true
     },
     onNewMessage:function(msg){  //both

@@ -21,9 +21,6 @@
 .box.box-danger {
   border-top-color: #dd4b39;
 }
-.box.box-warning {
-  border-top-color: #f39c12;
-}
 .box.box-success {
   border-top-color: #00a65a;
 }
@@ -428,7 +425,7 @@
   padding: 10px;
   height: 250px;
   overflow-y: auto;
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 .direct-chat-msg,
 .direct-chat-text {
@@ -628,7 +625,7 @@
 .right .direct-chat-name{
     float: right !important;
 }
-.right .direct-chat-name,{
+.right .direct-chat-name{
     float: right !important;
 }
 .right .direct-chat-timestamp {
