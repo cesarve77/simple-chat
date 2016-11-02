@@ -6,12 +6,11 @@
 
 Meteor.methods({
     "SimpleChat.messageReceived": function (id, username) {
+
         this.unblock()
         if (!SimpleChat.options.showReceived) return false
-        console.log('received')
-        //todo remove
-        check(id, String);
-        check(username, String);
+        check(id, String)
+        check(id, username)
         Meteor._sleepForMs(800 * Meteor.isDevelopment)
         const message = SimpleChat.Chats.findOne(id, {fields: {roomId: 1, receivedBy: 1}})
         if (!message)
@@ -33,7 +32,9 @@ Meteor.methods({
         Meteor._sleepForMs(800 * Meteor.isDevelopment)
         check(roomId, String);
         check(username, String);
-        const date=new Date()
+        check(avatar, Match.Maybe(String));
+        check(name, Match.Maybe(String));
+        const date = new Date()
         if (SimpleChat.options.showJoined) {
             SimpleChat.Chats.insert({
                 roomId,
@@ -55,9 +56,9 @@ Meteor.methods({
                 join: false
             })
             SimpleChat.Rooms.update(roomId, {$pull: {usernames: username}})
-            SimpleChat.options.onLeft(roomId, username, name,date)
+            SimpleChat.options.onLeft(roomId, username, name, date)
         })
-        SimpleChat.options.onJoin(roomId, username, name,date)
+        SimpleChat.options.onJoin(roomId, username, name, date)
     },
     "SimpleChat.messageViewed": function (id, username) {
         this.unblock()
