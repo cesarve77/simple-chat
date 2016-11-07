@@ -12,14 +12,14 @@ SimpleChat.Rooms.deny({
         return true;
     },
 });
-SimpleChat.Chats.deny({
+SimpleChat.Chats.allow({
     insert() {
-        return true;
+        return false;
     },
     update() {
-        return true;
+        return false;
     },
     remove() {
-        return true;
+        return false;
     },
 });
