@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor'
 import {check} from 'meteor/check'
+import {Match} from 'meteor/check'
 import {Chats} from './collections'
 import {SimpleChat} from './config'
 Meteor.methods({
@@ -9,13 +10,12 @@ Meteor.methods({
         check(username, Match.Maybe(String));
         check(avatar, Match.Maybe(String));
         check(name, Match.Maybe(String));
+        check(custom, Match.Any );
 
         this.unblock()
         if (!SimpleChat.options.allow.call(this, message, roomId, username, avatar, name))
             throw new Meteor.Error(403, "Access deny")
         message=_.escape(message)
-        if (avatar) check(avatar, Match.Maybe(String));
-        //todo borrar
 
         const msg={
             message,

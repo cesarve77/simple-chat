@@ -64,6 +64,7 @@ Example:
 ```
 
 //somewhere in both (client and  server) 
+import {SimpleChat} from 'meteor/cesarve:simple-chat/config'
 
 SimpleChat.configure ({
     texts:{
