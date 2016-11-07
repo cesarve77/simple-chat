@@ -1,6 +1,6 @@
 Package.describe({
     summary: "Simple chat window. The star point to make your own chat",
-    version: "0.3.2",
+    version: "0.3.4",
     name: "cesarve:simple-chat",
     git: "https://github.com/cesarve77/simple-chat"
 });
@@ -19,7 +19,7 @@ Package.onUse(function (api) {
     api.addFiles(['config.js','collections.js','methods.js'], ['client','server']);
     api.addFiles(['publications.js'], ['server']);
     api.addFiles(['methods_server.js'], ['server']);
-    api.addFiles(['window.html', 'window.js', 'window.css','visivility.js'], ['client']);
+    api.addFiles(['window.html', 'window.js', 'window.css','visibility.js'], ['client']);
     api.addFiles(['spinner.html','spinner.css'], ['client']);
     api.addAssets(['assets/bell.mp3'],'client')
     api.addAssets(['assets/fonts/chat.eot','assets/fonts/chat.woff','assets/fonts/chat.svg','assets/fonts/chat.ttf'],'client')
