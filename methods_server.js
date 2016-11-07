@@ -6,11 +6,11 @@
 
 Meteor.methods({
     "SimpleChat.messageReceived": function (id, username) {
-
-        this.unblock()
-        if (!SimpleChat.options.showReceived) return false
         check(id, String)
         check(id, username)
+        this.unblock()
+        if (!SimpleChat.options.showReceived) return false
+
         Meteor._sleepForMs(800 * Meteor.isDevelopment)
         const message = SimpleChat.Chats.findOne(id, {fields: {roomId: 1, receivedBy: 1}})
         if (!message)
@@ -26,14 +26,15 @@ Meteor.methods({
         return false
     },
     "SimpleChat.join": function (roomId, username, avatar, name) {
-        this.unblock()
-        if (!SimpleChat.options.showViewed) return false
-        //todo remove
-        Meteor._sleepForMs(800 * Meteor.isDevelopment)
         check(roomId, String);
         check(username, String);
         check(avatar, Match.Maybe(String));
         check(name, Match.Maybe(String));
+        this.unblock()
+        if (!SimpleChat.options.showViewed) return false
+        //todo remove
+        Meteor._sleepForMs(800 * Meteor.isDevelopment)
+
         const date = new Date()
         if (SimpleChat.options.showJoined) {
             SimpleChat.Chats.insert({
@@ -61,12 +62,13 @@ Meteor.methods({
         SimpleChat.options.onJoin(roomId, username, name, date)
     },
     "SimpleChat.messageViewed": function (id, username) {
+        check(id, String);
+        check(username, String);
         this.unblock()
         if (!SimpleChat.options.showViewed) return false
         //todo remove
         Meteor._sleepForMs(800 * Meteor.isDevelopment)
-        check(id, String);
-        check(username, String);
+
         const message = SimpleChat.Chats.findOne(id, {fields: {roomId: 1, viewedBy: 1}})
         if (!message)
             throw Meteor.Error(403, "Message do not exist")
