@@ -1,3 +1,9 @@
+import {Meteor} from 'meteor/meteor'
+import {check} from 'meteor/check'
+import {Chats} from './collections'
+import {SimpleChat} from './config'
+
+
 Meteor.publish("simpleChats", function (roomId, limit) {
     check(roomId, String)
     check(limit, Number)
@@ -13,6 +19,6 @@ Meteor.publish("simpleChats", function (roomId, limit) {
     var options = {sort: {date: -1}}
     if (limit)
         options.limit = limit
-    return SimpleChat.Chats.find(query, options);
+    return Chats.find(query, options);
 });
 

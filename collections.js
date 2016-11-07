@@ -1,7 +1,7 @@
-SimpleChat.Chats = new Meteor.Collection("simpleChats")
-SimpleChat.Rooms = new Meteor.Collection("simpleRooms")
+export const  Chats = new Meteor.Collection("simpleChats")
+export const Rooms = new Meteor.Collection("simpleRooms")
 
-SimpleChat.Rooms.deny({
+Chats.deny({
     insert() {
         return true;
     },
@@ -12,7 +12,30 @@ SimpleChat.Rooms.deny({
         return true;
     },
 });
-SimpleChat.Chats.allow({
+Chats.allow({
+    insert() {
+        return false;
+    },
+    update() {
+        return false;
+    },
+    remove() {
+        return false;
+    },
+});
+
+Rooms.deny({
+    insert() {
+        return true;
+    },
+    update() {
+        return true;
+    },
+    remove() {
+        return true;
+    },
+});
+Chats.allow({
     insert() {
         return false;
     },

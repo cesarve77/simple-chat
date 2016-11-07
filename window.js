@@ -1,3 +1,14 @@
+import {Template} from 'meteor/templating'
+import {Meteor} from 'meteor/meteor'
+import {Chats} from './collections'
+import {SimpleChat} from './config'
+import moment from 'moment'
+import './window.css'
+import './window.html'
+import './spinner.css'
+import './spinner.html'
+
+
 SimpleChat.scrollToEnd = function (template) {
     Template.SimpleChatWindow.endScroll = true;
     template.$(".direct-chat-messages").animate({scrollTop: template.$('.scroll-height').height()}, 300);
@@ -14,7 +25,6 @@ Template.SimpleChatWindow.onCreated(function () {
     this.showJoined = this.data.showJoined != undefined ? this.data.showJoined : SimpleChat.options.showJoined
     this.showReceived = this.data.showReceived != undefined ? this.data.showReceived : SimpleChat.options.showReceived
     this.increment = this.limit.get()
-    console.log('Template.SimpleChatWindow.onCreated', this)
     //accept function (for reactive data) or plain data
     if (typeof this.data.roomId != "function")
         this.getRoomId = ()=> {
@@ -141,7 +151,7 @@ Template.SimpleChatWindow.helpers({
     },
     simpleChats: function () {
         var template = Template.instance()
-        var chats = SimpleChat.Chats.find({roomId: template.getRoomId()}, {sort: {date: 1}})
+        var chats = Chats.find({roomId: template.getRoomId()}, {sort: {date: 1}})
 
 
         let handleChanges = chats.observeChanges({
@@ -164,7 +174,7 @@ Template.SimpleChatWindow.helpers({
         return Template.instance().getUsername() == this.username || _.contains(this.viewedBy, Template.instance().getUsername())
     },
     hasMore: function () {
-        return SimpleChat.Chats.find({roomId: Template.instance().getRoomId()}, {
+        return Chats.find({roomId: Template.instance().getRoomId()}, {
                 sort: {date: 1},
                 limit: Template.instance().limit.get()
             }).count() === Template.instance().limit.get()

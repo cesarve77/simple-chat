@@ -1,7 +1,7 @@
 /**
  * Created by cesar on 25/2/16.
  */
-SimpleChat={}
+export const  SimpleChat={}
 SimpleChat.options = {
     texts:{
         loadMore: 'Load More',

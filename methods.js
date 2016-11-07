@@ -1,3 +1,7 @@
+import {Meteor} from 'meteor/meteor'
+import {check} from 'meteor/check'
+import {Chats} from './collections'
+import {SimpleChat} from './config'
 Meteor.methods({
     "SimpleChat.newMessage": function (message, roomId, username, avatar, name, custom) {
         check(message, String);
@@ -12,9 +16,7 @@ Meteor.methods({
         message=_.escape(message)
         if (avatar) check(avatar, Match.Maybe(String));
         //todo borrar
-        if (!this.isSimulation && Meteor.isDevelopment) {
-            //Meteor._sleepForMs(800)
-        }
+
         const msg={
             message,
             roomId,
@@ -30,7 +32,7 @@ Meteor.methods({
             custom,
             date: new Date()
         }
-        msg._id=SimpleChat.Chats.insert(msg)
+        msg._id=Chats.insert(msg)
         SimpleChat.options.onNewMessage(msg)
         return msg
     }
