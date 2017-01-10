@@ -10,7 +10,7 @@ Meteor.methods({
         this.unblock()
         if (!SimpleChat.options.showReceived) return false
         check(id, String)
-        check(id, username)
+        check(username, String)
         Meteor._sleepForMs(800 * Meteor.isDevelopment)
         const message = SimpleChat.Chats.findOne(id, {fields: {roomId: 1, receivedBy: 1}})
         if (!message)
