@@ -14,7 +14,6 @@ Template.SimpleChatWindow.onCreated(function () {
     this.showJoined = this.data.showJoined != undefined ? this.data.showJoined : SimpleChat.options.showJoined
     this.showReceived = this.data.showReceived != undefined ? this.data.showReceived : SimpleChat.options.showReceived
     this.increment = this.limit.get()
-    console.log('Template.SimpleChatWindow.onCreated', this)
     //accept function (for reactive data) or plain data
     if (typeof this.data.roomId != "function")
         this.getRoomId = ()=> {
@@ -61,13 +60,13 @@ Template.SimpleChatWindow.onRendered(function () {
             self.endScroll = false;
         }
     })
-    this.autorun(() => {
+    /*this.autorun(() => {
         if (this.subscriptionsReady()) {
             this.subscribing = false;
             /**
              * the setTimeOut is to be sure that dom already update, and make the real calc of scroñ
              */
-            this.$('.direct-chat-messages').scrollTop(this.$('.scroll-height')[0].scrollHeight - this.scroll)
+      /*      this.$('.direct-chat-messages').scrollTop(this.$('.scroll-height')[0].scrollHeight - this.scroll)
 
 
         } else {
@@ -76,12 +75,12 @@ Template.SimpleChatWindow.onRendered(function () {
                 Meteor.setTimeout(()=> {
                     this.initializing = false
                     SimpleChat.scrollToEnd(this)
-                },50)
+                },0)
 
         }
 
 
-    })
+    })*/
     const username = this.getUsername()
     if (this.showViewed) {
         const checkViewed = ()=> {
@@ -100,7 +99,6 @@ Template.SimpleChatWindow.onRendered(function () {
     }
     $(window).on('SimpleChat.newMessage', (e, id, doc)=> {
         if (this.endScroll) {
-
             SimpleChat.scrollToEnd(this)
             if (this.beep && window.visivility == 'hidden') {
                 new Audio('/packages/cesarve_simple-chat/assets/bell.mp3').play()
@@ -115,6 +113,9 @@ Template.SimpleChatWindow.onRendered(function () {
 
 
 Template.SimpleChatWindow.helpers({
+    scrollToEnd:function () {
+        SimpleChat.scrollToEnd(Template.instance())
+    },
     placeholder: function () {
         return Template.instance().data.placeholder || SimpleChat.options.texts.placeholder
     },

@@ -24,7 +24,7 @@ SimpleChat.options = {
         return true
     },
     onNewMessage: function (msg) {
-        console.log(msg)
+
     },
     onReceiveMessage: function () {
 

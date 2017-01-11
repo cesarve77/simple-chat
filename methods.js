@@ -6,12 +6,9 @@ Meteor.methods({
         check(message, String);
         check(roomId, String);
         check(username, Match.Maybe(String));
-        console.log('avatar',avatar)
         check(avatar, Match.Maybe(String));
-        console.log('name',name)
         check(name, Match.Optional(String));
         message=_.escape(message)
-        console.log(message, roomId, username, avatar, name)
         if (avatar) check(avatar, Match.Maybe(String));
         check(name, Match.Maybe(String));
         //todo borrar
