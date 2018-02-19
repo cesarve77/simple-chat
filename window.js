@@ -7,6 +7,7 @@ import './window.css'
 import './window.html'
 import './spinner.css'
 import './spinner.html'
+import './input.html'
 
 
 SimpleChat.scrollToEnd = function (template) {
@@ -121,7 +122,7 @@ Template.SimpleChatWindow.onRendered(function () {
             }
         }
     })
-})
+});
 
 
 Template.SimpleChatWindow.helpers({
@@ -192,8 +193,7 @@ Template.SimpleChatWindow.helpers({
             sameElse: 'DD/MM/YYYY hh:mm a'
         });
     }
-})
-;
+});
 
 
 Template.SimpleChatWindow.events({
