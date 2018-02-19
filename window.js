@@ -192,6 +192,9 @@ Template.SimpleChatWindow.helpers({
             lastWeek: '[Last] dddd[ at ]hh:mm a',
             sameElse: 'DD/MM/YYYY hh:mm a'
         });
+    },
+    template: function() {
+        return Template.instance().data.template || SimpleChat.options.template
     }
 });
 

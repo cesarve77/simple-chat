@@ -68,8 +68,7 @@ Template.SimpleChatInput.helpers({
 
     me: function () {
         return Template.instance().getUsername() == this.username
-    }
-    ,
+    },
     formatDate: function (date) {
         return moment(date).calendar(null, {
             sameDay: 'hh:mm a',
@@ -77,5 +76,8 @@ Template.SimpleChatInput.helpers({
             lastWeek: '[Last] dddd[ at ]hh:mm a',
             sameElse: 'DD/MM/YYYY hh:mm a'
         });
+    },
+    template: function() {
+        return Template.instance().data.template || SimpleChat.options.template
     }
 });

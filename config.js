@@ -28,7 +28,8 @@ export const SimpleChat = {
         },
         onReceiveMessage: function () {
 
-        }
+        },
+        template: 'SimpleChatInput'
     },
     configure: function (options) {
         this.options = this.options || {};
