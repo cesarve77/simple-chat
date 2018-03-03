@@ -1,4 +1,4 @@
-export const  Chats = new Meteor.Collection("simpleChats")
+export const Chats = new Meteor.Collection("simpleChats")
 export const Rooms = new Meteor.Collection("simpleRooms")
 
 Chats.deny({
