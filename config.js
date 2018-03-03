@@ -28,7 +28,13 @@ export const SimpleChat = {
         },
         onReceiveMessage: function () {
 
-        }
+        },
+        onJoin: function (roomId, username, name,date) {
+            //server
+        },
+        onLeft: function (roomId, username, name,date) {
+            //server
+        },
     },
     configure: function (options) {
         this.options = this.options || {};
