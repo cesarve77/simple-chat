@@ -30,7 +30,7 @@ just paste the template
       
 Where
 - \<roomId>: required, plain string or function return a unique id for each room , 
-- \<username>: required, plain string or function  return a string with unique user id or user name or any unique identifier  ,
+- \<username>: required, plain string or function  return a string with unique user id or user name or any unique identifier,
 - \<name>: optional, plain string or function  return a string with display name, default  username value
 - \<avatar>: optional,plain string or function  return a string avatar image source 
 - \<limit>: optional number fot limit the last "n" messages for subscription, default 50
@@ -123,16 +123,10 @@ To [Jetbrains.com](Jetbrains.com) for give us a free licences of their amazing s
 
 # Contributing 
 
-1) Please help me with my english
-
-2) Pull request are very welcome
-
-3) fork the repo
-
-5) make changes
-
-6) commit
-
-7) make a pull request
-
-#
+1. Please help me with my english
+2. Open an issue
+3. Pull request are very welcome:
+	1. Fork the repo
+	2. Make changes
+	3. Commit
+	4. make a pull request
