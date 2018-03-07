@@ -29,6 +29,12 @@ export const SimpleChat = {
         onReceiveMessage: function () {
 
         },
+        onJoin: function (roomId, username, name,date) {
+            //server
+        },
+        onLeft: function (roomId, username, name,date) {
+            //server
+        },
         template: 'SimpleChatInput'
     },
     configure: function (options) {
