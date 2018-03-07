@@ -54,7 +54,7 @@ Meteor.methods({
         }
         Rooms.upsert(roomId, {$addToSet: {usernames: username}})
         this.connection.onClose(function () {
-            SimpleChat.Chats.insert({
+            Chats.insert({
                 roomId,
                 username,
                 name,
