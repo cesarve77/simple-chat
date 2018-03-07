@@ -12,7 +12,7 @@ Meteor.methods({
     "SimpleChat.messageReceived": function (id, username) {
 
         check(id, String)
-        check(id, username)
+        check(username, String)
 
         this.unblock()
         if (!SimpleChat.options.showReceived) return false
