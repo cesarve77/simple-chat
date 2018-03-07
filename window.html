@@ -64,13 +64,8 @@
         <!--/.direct-chat-messages-->
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
-        <div class="input-group">
-            <input type="text" name="message" placeholder="{{placeholder}}" class="form-control" id="simple-chat-message">
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-primary btn-flat" id="message-send">{{button}}</button>
-            </span>
-        </div>
+    <div class="box-footer simple-chat">
+        {{> Template.dynamic template=template}}
     </div>
     <!-- /.box-footer-->
 </template>
