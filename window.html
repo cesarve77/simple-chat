@@ -1,13 +1,9 @@
 <template name="SimpleChatWindow">
-
-
-    <div class="box-body chat-scroll">
-
+    <div class="box-body chat-scroll simple-chat">
         <!-- Conversations are loaded here -->
         <div class="direct-chat-messages">
             <div class="scroll-height">
                 {{#unless Template.subscriptionsReady}}
-
                     <div class="" style="height: 34px; width: 64px; margin: auto">
                         {{>spinner}}
                     </div>
@@ -19,16 +15,14 @@
                 <!-- Message. Default to the left -->
                 {{#each simpleChats}}
                     {{#if message}}
-                        <div class="direct-chat-msg {{#if me}}right{{/if}} {{#unless viewedMe}}notViewed{{/unless}}"
-                             id="{{_id}}">
+                        <div class="direct-chat-msg {{#if me}}right{{/if}} {{#unless viewedMe}}notViewed{{/unless}}" id="{{_id}}">
                             <div class="direct-chat-info clearfix">
                                 <span class="direct-chat-name pull-left">{{name}}</span>
                                 <span class="direct-chat-timestamp pull-right">{{formatDate date}}</span>
                             </div>
                             <!-- /.direct-chat-info -->
                             {{#if avatar}}
-                                <img class="direct-chat-img" src="{{avatar}}" alt="message user image"><!-- /.direct-chat-img -->
-                            {{/if}}
+                                <img class="direct-chat-img" src="{{avatar}}" alt="message user image"><!-- /.direct-chat-img -->{{/if}}
                             <div class="direct-chat-text" style="{{#unless avatar}}margin: 5px 0 0 0px{{/unless}}">
                                 {{{message}}}
                                 {{#if me}}
@@ -43,22 +37,23 @@
                                         {{else}}
                                             <i class="icon-clock"></i>
                                         {{/if}}
-
                                     </div>
                                 {{/if}}
                             </div>
                             <!-- /.direct-chat-text -->
                         </div>
                     {{else}}
-
-                        <div class="direct-chat-msg join"
-                             id="{{_id}}">
+                        <div class="direct-chat-msg join" id="{{_id}}">
                             {{#if avatar}}
-                                <img class="direct-chat-img" src="{{avatar}}" alt="message user image"  ><!-- /.direct-chat-img -->
-                            {{/if}}
-                            <div class="direct-chat-info clearfix" >
-                                <span class="direct-chat-name pull-left"> {{name}} {{#if join}}{{join}}{{else}}{{left}}{{/if}} {{room}} {{formatDate date}}</span>
-
+                                <img class="direct-chat-img" src="{{avatar}}" alt="message user image"><!-- /.direct-chat-img -->{{/if}}
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-left">
+                                    {{name}}
+                                    {{#if join}}{{join}}
+                                    {{else}}{{left}}
+                                    {{/if}}
+                                    {{room}}
+                                    {{formatDate date}}</span>
                             </div>
                         </div>
                     {{/if}}
@@ -69,17 +64,8 @@
         <!--/.direct-chat-messages-->
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
-        <div class="input-group">
-            <input type="text" name="message" placeholder="{{placeholder}}" class="form-control"
-                   id="simple-chat-message">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-primary btn-flat" id="message-send">{{button}}</button>
-              </span>
-        </div>
+    <div class="box-footer simple-chat">
+        {{> Template.dynamic template=template}}
     </div>
     <!-- /.box-footer-->
-
-
 </template>
-
