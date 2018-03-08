@@ -132,6 +132,9 @@ Template.SimpleChatWindow.helpers({
     button: function () {
         return Template.instance().data.button || SimpleChat.options.texts.button
     },
+    loadMore: function () {
+        return Template.instance().data.loadMore || SimpleChat.options.texts.loadMore
+    },
     join: function () {
         return Template.instance().data.join || SimpleChat.options.texts.join
     },
@@ -180,7 +183,6 @@ Template.SimpleChatWindow.helpers({
                 limit: Template.instance().limit.get()
             }).count() === Template.instance().limit.get()
     },
-
     me: function () {
         return Template.instance().getUsername() == this.username
     }
