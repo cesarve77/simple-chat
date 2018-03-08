@@ -8,6 +8,7 @@ import './window.html'
 import './spinner.css'
 import './spinner.html'
 import './input.html'
+import './loadmore.html'
 
 
 SimpleChat.scrollToEnd = function (template) {
@@ -132,9 +133,6 @@ Template.SimpleChatWindow.helpers({
     button: function () {
         return Template.instance().data.button || SimpleChat.options.texts.button
     },
-    loadMore: function () {
-        return Template.instance().data.loadMore || SimpleChat.options.texts.loadMore
-    },
     join: function () {
         return Template.instance().data.join || SimpleChat.options.texts.join
     },
@@ -196,8 +194,11 @@ Template.SimpleChatWindow.helpers({
         });
     },
     inputTemplate: function() {
-        return Template.instance().data.inputTemplate || SimpleChat.options.text.inputTemplate
-    }
+        return Template.instance().data.inputTemplate || SimpleChat.options.inputTemplate
+    },
+    loadMoreTemplate: function() {
+        return Template.instance().data.loadMoreTemplate || SimpleChat.options.loadMoreTemplate
+    },
 });
 
 

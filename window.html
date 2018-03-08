@@ -9,7 +9,7 @@
                     </div>
                 {{else}}
                     {{#if hasMore }}
-                        <button class="btn btn-block btn-default" id="simple-chat-load-more">{{loadMore}}</button>
+                        {{> Template.dynamic template=loadMoreTemplate}}
                     {{/if}}
                 {{/unless}}
                 <!-- Message. Default to the left -->
