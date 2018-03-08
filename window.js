@@ -193,8 +193,8 @@ Template.SimpleChatWindow.helpers({
             sameElse: 'DD/MM/YYYY hh:mm a'
         });
     },
-    template: function() {
-        return Template.instance().data.template || SimpleChat.options.template
+    inputTemplate: function() {
+        return Template.instance().data.inputTemplate || SimpleChat.options.text.inputTemplate
     }
 });
 
