@@ -195,6 +195,9 @@ Template.SimpleChatWindow.helpers({
     },
     template: function() {
         return Template.instance().data.template || SimpleChat.options.template
+    },
+    height: function() {
+        return Template.instance().data.height || SimpleChat.options.texts.height
     }
 });
 

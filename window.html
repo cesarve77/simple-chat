@@ -1,7 +1,7 @@
 <template name="SimpleChatWindow">
     <div class="box-body chat-scroll simple-chat">
         <!-- Conversations are loaded here -->
-        <div class="direct-chat-messages">
+        <div class="direct-chat-messages" style="height: {{height}};">
             <div class="scroll-height">
                 {{#unless Template.subscriptionsReady}}
                     <div class="" style="height: 34px; width: 64px; margin: auto">
