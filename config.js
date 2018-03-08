@@ -7,8 +7,8 @@ export const SimpleChat = {
             loadMore: 'Load More',
             placeholder: 'Type message ...',
             button: 'send',
-            join: 'Join to',
-            left: 'Left the',
+            join: 'joined the',
+            left: 'left',
             room: 'room at'
 
         },
