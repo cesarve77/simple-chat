@@ -35,7 +35,8 @@ export const SimpleChat = {
         onLeft: function (roomId, username, name,date) {
             //server
         },
-        template: 'SimpleChatInput'
+        inputTemplate: 'SimpleChatInput',
+        loadMoreTemplate: 'LoadMore',
     },
     configure: function (options) {
         this.options = this.options || {};
