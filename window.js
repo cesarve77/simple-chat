@@ -8,6 +8,7 @@ import './window.html'
 import './spinner.css'
 import './spinner.html'
 import './input.html'
+import './loadmore.html'
 
 
 SimpleChat.scrollToEnd = function (template) {
@@ -180,7 +181,6 @@ Template.SimpleChatWindow.helpers({
                 limit: Template.instance().limit.get()
             }).count() === Template.instance().limit.get()
     },
-
     me: function () {
         return Template.instance().getUsername() == this.username
     }
@@ -193,12 +193,15 @@ Template.SimpleChatWindow.helpers({
             sameElse: 'DD/MM/YYYY hh:mm a'
         });
     },
-    template: function() {
-        return Template.instance().data.template || SimpleChat.options.template
-    },
     height: function() {
         return Template.instance().data.height || SimpleChat.options.texts.height
-    }
+    },
+    inputTemplate: function() {
+        return Template.instance().data.inputTemplate || SimpleChat.options.inputTemplate
+    },
+    loadMoreTemplate: function() {
+        return Template.instance().data.loadMoreTemplate || SimpleChat.options.loadMoreTemplate
+    },
 });
 
 
