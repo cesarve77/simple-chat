@@ -100,7 +100,8 @@ SimpleChat.configure ({
     onJoin:function(roomId, username, name,date){  //server
     },
     onLeft:function(roomId, username, name,date) { //server
-    }
+    },
+    height: '300px', // Configure the height of the chat
 })
 
 ```
