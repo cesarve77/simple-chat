@@ -33,25 +33,25 @@ Just paste the template
 Where
 
 - `<roomId>`: required, plain string or function return a unique id for each room
-- `<username>`: required, plain string or function  return a string with unique user id or user name or any unique identifier
-- `<name>`: optional, plain string or function  return a string with display name, default  username value
-- `<avatar>`: optional, plain string or function  return a string avatar image source 
-- `<limit>`: optional number fot limit the last "n" messages for subscription, default 50
-- `<beep>`: optional boolean emit sound on new message, default false
-- `<showViewed>`: optional boolean for showing or not when the messages are viewed (like whatsapp); default false (this feature can use a lot of server resource)
-- `<showReceived>`: optional boolean for showing or not when the messages are received (like whatsapp) (this feature can use a lot of server resource), default false
-- `<showJoined>`: optional boolean for showing message when some user join to a room, default false
-- `<publishChats>`: optional function return true for allow publish message, or false to deny this function receive as arguments (roomId, limit) and context is publish context, default return true
-- `<allow>`: optional function return true for allow insert new message or false to deny, this function receive as argumetns (message, roomId, username, avatar, name) and context is methods context, default return true
+- `<username>`: required, plain string or function return a string with unique user id or user name or any unique identifier
+- `<name>`: optional, plain string or function return a string with display name *[default: the `username` value]*
+- `<avatar>`: optional, plain string or function return a string avatar image source 
+- `<limit>`: optional number for limiting the last *n* messages for subscription, *[default: 50]*
+- `<beep>`: optional boolean emit sound on new message *[default: false]*
+- `<showViewed>`: optional boolean for showing or not when the messages are viewed (like WhatsApp) *[default: false (this feature can use a lot of server resource)]*
+- `<showReceived>`: optional boolean for showing or not when the messages are received (like whatsapp) *[default: false (this feature can use a lot of server resource)]*
+- `<showJoined>`: optional boolean for showing message when some user join to a room *[default: false]*
+- `<publishChats>`: optional function return true for allow publish message, or false to deny this function receive as arguments (`roomId`, `limit`) and context is publish context *[default: return true]*
+- `<allow>`: optional function return true for allow insert new message or false to deny, this function receive as arguments (`message`, `roomId`, `username`, `avatar`, `name`) and context is methods context *[default: return true]*
 - `<custom>`: optional any custom value
-- `<loadMore>`: text for load more button default *'Load More'*
-- `<placeholder>`: text for input placeholder default *'Type message...'*
-- `<button>`: text for button submit default *'Send'*
-- `<join>`:  text for  message Join default  *'Join to'*
-- `<left>`:  text for  message left default  *'Left the'*
-- `<room>`:  text for  message Room defaut *'room'*
-- `<inpuTemplate>`:  a custom template for the input
-- `<loadMoreTemplate>`:  a custom template for *'Load More'* section
+- `<loadMore>`: text for load more button *[default: 'Load More']*
+- `<placeholder>`: text for input placeholder *[default: 'Type message...']*
+- `<button>`: text for button submit *[default: 'Send']*
+- `<join>`:  text for  message Join *[default: 'Join to']*
+- `<left>`:  text for  message left *[default: 'Left the']*
+- `<room>`:  text for  message Room *[default: 'room']*
+- `<inpuTemplate>`:  a custom template for the input *[default: 'SimpleChatInput']*
+- `<loadMoreTemplate>`:  a custom template for *'Load More'* section *[default: 'LoadMore']*
 
 
 Note: this values can be a literal a helper or template data
@@ -60,15 +60,14 @@ Example:
 
 ```
 {{>SimpleChatWindow roomId="free room" username=this.username limit=limit}}
-    //roomIn is a literal
-    //username is data template
-    //limit is a helper
+    // roomIn is a literal
+    // username is data template
+    // limit is a helper
 ```
 
 ## Configure Globally 
 
-```
-
+```javascript
 //somewhere in both (client and  server) 
 import {SimpleChat} from 'meteor/cesarve:simple-chat/config'
 
@@ -107,10 +106,10 @@ SimpleChat.configure ({
     },
     onLeft:function(roomId, username, name,date) { //server
     },
-    inputTemplate: 'SimpleChatInput',
-    loadMoreTemplate: 'LoadMore',
-})
+    inputTemplate: 'SimpleChatInput', // In case you want to overwrite the template
+    loadMoreTemplate: 'LoadMore', // In case you want to overwrite the template
 
+})
 ```
 
 These options can be overwrite individually on: 
