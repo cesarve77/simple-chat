@@ -35,6 +35,7 @@ export const SimpleChat = {
         onLeft: function (roomId, username, name,date) {
             //server
         },
+        height: '300px',
         inputTemplate: 'SimpleChatInput',
         loadMoreTemplate: 'LoadMore',
     },

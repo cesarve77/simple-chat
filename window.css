@@ -52,8 +52,6 @@
 .simple-chat .box.height-control .box-body
 {
     overflow: auto;
-
-    max-height: 300px;
 }
 .simple-chat .box .border-right
 {

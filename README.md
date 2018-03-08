@@ -106,8 +106,10 @@ SimpleChat.configure ({
     },
     onLeft:function(roomId, username, name,date) { //server
     },
+    height: '300px', // Configure the height of the chat
     inputTemplate: 'SimpleChatInput', // In case you want to overwrite the template
     loadMoreTemplate: 'LoadMore', // In case you want to overwrite the template
+})
 
 })
 ```
