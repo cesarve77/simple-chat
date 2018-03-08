@@ -47,10 +47,11 @@ Where
 - `<loadMore>`: text for load more button *[default: 'Load More']*
 - `<placeholder>`: text for input placeholder *[default: 'Type message...']*
 - `<button>`: text for button submit *[default: 'Send']*
-- `<join>`:  text for  message Join *[default: 'Join to']*
-- `<left>`:  text for  message left *[default: 'Left the']*
-- `<room>`:  text for  message Room *[default: 'room']*
-- `<inpuTemplate>`:  a custom template for the input *[default: 'SimpleChatInput']*
+- `<join>`: text for message Join *[default: 'Join to']*
+- `<left>`: text for message left *[default: 'Left the']*
+- `<room>`: text for message Room *[default: 'room']*
+- `<height>`: css height for the message Room *[default: '300px']*
+- `<inpuTemplate>`: a custom template for the input *[default: 'SimpleChatInput']*
 - `<loadMoreTemplate>`:  a custom template for *'Load More'* section *[default: 'LoadMore']*
 
 
