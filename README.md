@@ -17,7 +17,7 @@
 
 [https://github.com/cesarve77/demo-simple-chat]()
 
-## Installing
+## Installation
 
 `$ meteor add cesarve:simple-chat`
 
@@ -28,8 +28,7 @@ Just paste the template
 ```
 {{>SimpleChatWindow roomId=<roomId> username=<username> name=<name> avatar=<avatar> limit=<limit> showViewed=<showViewed>  showJoined=<showJoined> publishChats=<publishChats> allow=<allow> custom=<custom>}}
 ```
-   
-      
+
 Where
 
 - `<roomId>`: required, plain string or function return a unique id for each room
@@ -115,13 +114,13 @@ SimpleChat.configure ({
 })
 ```
 
-These options can be overwrite individually on: 
+These options can be overwritten individually on: 
 
 ```
 {{>SimpleChatWindow roomId=<roomId> username=<username> avatar=<avatar> limit=<limit> showViewed=true  showJoined= true publishChats=publishChats allow=allow}}
 ```
 
-# How to secure the chat
+## How to secure the chat
 
 You have to control the access where you insert the template, and you can control the access to data with these 2 options:
 
