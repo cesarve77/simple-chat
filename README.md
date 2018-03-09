@@ -121,6 +121,24 @@ These options can be overwrite individually on:
 {{>SimpleChatWindow roomId=<roomId> username=<username> avatar=<avatar> limit=<limit> showViewed=true  showJoined= true publishChats=publishChats allow=allow}}
 ```
 
+# How to secure the chat
+
+You have to control the access where you insert the template, and you can control the access to data with these 2 options:
+
+```
+publishChats: function(roomId, limi){ //server
+   //here the context is the same for a publication, that means you have access to this.userId who are asking for subscribe.
+   // for example
+   return isLoggedAndHasAccessToSeeMessage(this.userId)
+},
+allow: function(message, roomId, username, avatar, name){
+   //here the context is the same for a Method, that means you hace access to this.userId also
+   // for example
+   return isLoggedAndHasAccessSendMessages(this.userId)
+    return true
+},
+```
+
 # Styling
 
 Chat html was taken from [https://almsaeedstudio.com/themes/AdminLTE/documentation/index.html]() with direct chat widget.
