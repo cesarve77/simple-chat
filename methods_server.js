@@ -37,7 +37,7 @@ Meteor.methods({
         check(avatar, Match.Maybe(String));
         check(name, Match.Maybe(String));
         this.unblock()
-        if (!SimpleChat.options.showViewed) return false
+        if (!SimpleChat.options.showJoined) return false
         //todo remove
         Meteor._sleepForMs(800 * Meteor.isDevelopment)
 
